@@ -1,5 +1,4 @@
 const asyncHandler = require('express-async-handler');
-
 const jwt = require('jsonwebtoken');
 
 const valiadateToken = asyncHandler(async (req, res, next) => {
@@ -13,18 +12,14 @@ const valiadateToken = asyncHandler(async (req, res, next) => {
                 res.status(401);
                 throw new Error("Invalid token")
             }
-
             req.user = decoded.user;
             next();
         });
-
         if(!token){
             res.status(401);
             throw new Error("Unauthorized")
         }
     }
-
-
 });
 
 module.exports = valiadateToken;
