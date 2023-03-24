@@ -4,6 +4,9 @@ const Sprint = require('../models/sprintModel');
 const User = require('../models/userModel');
 
 
+// @desc Create a new Task
+// @route POST /api/users/task/create
+// @access Private
 const createTask = asyncHandler(async (req, res) => {
 
     // console.log(req.body);
@@ -38,7 +41,9 @@ const createTask = asyncHandler(async (req, res) => {
 });
 
 
-
+// @desc assignee a task to a user
+// @route POST /api/users/task/assignee
+// @access Private
 const assignTaskToUser = asyncHandler(async (req, res) => {
 
     console.log(req.body);
@@ -76,6 +81,9 @@ const assignTaskToUser = asyncHandler(async (req, res) => {
 });
 
 
+// @desc update task status
+// @route POST /api/users/task/status
+// @access Private
 const updateTaskStatus = asyncHandler(async (req, res) => {
     const { taskid, status } = req.body;
 
@@ -118,6 +126,31 @@ const updateTaskStatus = asyncHandler(async (req, res) => {
 
 
 
+// @desc get all tasks of a sprint
+// @route POST /api/users/task/taks
+// @access Private
+const getAllOfSprintTask = asyncHandler(async (req, res) => {
+    const { sprintid } = req.body;
 
 
-module.exports = { createTask, assignTaskToUser , updateTaskStatus};
+    if (!sprintid) {
+        res.status(400)
+        throw new Error("All fields are required");
+    }
+
+   const sprint = await Sprint.findById(sprintid);
+
+    if(!sprint){
+        res.status(400)
+        throw new Error("Invalid sprint");
+    }else{
+        const tasks = await Task.find({sprint: sprintid});
+        res.status(200).json(tasks);
+    }
+
+
+});
+
+
+
+module.exports = { createTask, assignTaskToUser , updateTaskStatus, getAllOfSprintTask};

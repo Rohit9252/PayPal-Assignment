@@ -4,7 +4,7 @@ const Sprint = require('../models/sprintModel');
 
 // @desc Create a new sprint
 // @route POST /api/sprints/create
-// @access Priv
+// @access Private
 const createSprint = asyncHandler(async (req, res) => {
     const {name} = req.body;
 
