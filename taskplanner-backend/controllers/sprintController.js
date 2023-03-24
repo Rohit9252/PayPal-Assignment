@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const Sprint = require('../models/sprintModel');
+const Task = require('../models/taskModel');
 
 
 // @desc Create a new sprint
@@ -52,6 +53,29 @@ const getAllSprints = asyncHandler(async (req, res) => {
 
 });
 
+const getSprintTask = asyncHandler(async (req, res) => {
+
+    const sprint = await Sprint.findById(req.params.id);
+
+    if(sprint){
+        const task = await Task.find({sprint: sprint._id}).select("-sprint").populate("assignee", "name");
+
+        // const taskObj ={
+        //     ...task,
+        //     sprint: sprint.name
+        // }
+
+        
+
+        res.status(200).json(task);
+    }else{
+        res.status(400)
+        throw new Error("Invalid sprint data");
+    }
 
 
-module.exports = {createSprint, getAllSprints};
+
+});
+
+
+module.exports = {createSprint, getAllSprints, getSprintTask};

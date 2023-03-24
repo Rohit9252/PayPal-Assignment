@@ -7,7 +7,9 @@ import Login from '../Pages/Login'
 import NotFound from '../Pages/NotFound'
 import Signup from '../Pages/Signup'
 import Sprint from '../Pages/Sprint'
+import SprintDetails from '../Pages/SprintDetails'
 import Tasks from '../Pages/Tasks'
+
 const AllRoutes = () => {
   return (
     <Routes>
@@ -19,6 +21,7 @@ const AllRoutes = () => {
         <Route path='/dash' element={<AdminPanel />}/>
         <Route path='/tasks' element={<Tasks />}/>
         <Route path='/sprint' element={<Sprint />}/>
+        <Route path='/sprint/:id' element={<SprintDetails />}/>
     </Routes>
   )
 }
