@@ -247,10 +247,10 @@ import {
   const NAV_ITEMS = [
     {
       label: 'Dashboard',
-      href: '/',
+      href: '/dash',
     },
     {
       label: 'Admin Panel',
-      href: '/',
+      href: '/dash',
     },
   ];

@@ -13,7 +13,9 @@ const createSprint = asyncHandler(async (req, res) => {
         throw new Error("Name is required");
     }
 
-    const exitSprint = Sprint.findOne({name});
+    const exitSprint = await Sprint.findOne({name});
+
+    
 
     if(exitSprint){
         res.status(400)
@@ -33,4 +35,23 @@ const createSprint = asyncHandler(async (req, res) => {
 
 
 
-module.exports = {createSprint};
+// @desc Get All Sprints
+// @route Get /api/users/sprints
+// @access Private
+
+
+const getAllSprints = asyncHandler(async (req, res) => {
+
+    const sprints = await Sprint.find();
+    if(sprints){
+        res.status(200).json(sprints);
+    }else{
+        res.status(400)
+        throw new Error("Invalid sprint data");
+    }
+
+});
+
+
+
+module.exports = {createSprint, getAllSprints};

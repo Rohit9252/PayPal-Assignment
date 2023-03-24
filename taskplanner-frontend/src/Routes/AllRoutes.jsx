@@ -1,10 +1,13 @@
 import React from 'react'
 import { Route,Routes} from "react-router-dom"
+import AdminPanel from '../Pages/AdminPanel'
 import ForgotPasswordForm from '../Pages/ForgetPass'
 import Home from '../Pages/Home'
 import Login from '../Pages/Login'
 import NotFound from '../Pages/NotFound'
 import Signup from '../Pages/Signup'
+import Sprint from '../Pages/Sprint'
+import Tasks from '../Pages/Tasks'
 const AllRoutes = () => {
   return (
     <Routes>
@@ -13,6 +16,9 @@ const AllRoutes = () => {
         <Route path='/signup' element={<Signup />}/>
         <Route path='/forget' element={<ForgotPasswordForm />}/>
         <Route path='*' element={<NotFound />}/>
+        <Route path='/dash' element={<AdminPanel />}/>
+        <Route path='/tasks' element={<Tasks />}/>
+        <Route path='/sprint' element={<Sprint />}/>
     </Routes>
   )
 }

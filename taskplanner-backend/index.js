@@ -5,9 +5,14 @@ const userRoutes = require('./routes/userRoutes');
 const errorHandler = require('./middleware/errorHandler');
 const sprintRoutes = require('./routes/sprintRouter');
 const taskRouter = require("./routes/taskRouter")
+const cors = require('cors');
+
 
 
 const PORT = process.env.PORT || 3000;
+
+
+app.use(cors());
 
 connectDB();
 
