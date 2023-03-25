@@ -14,26 +14,27 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 
-connectDB();
 
 
 
 
-app.get("/" , (req,res) => {
+app.get("/", (req, res) => {
     res.send("Hello World");
 })
 
 app.use(express.json());
 app.use("/api/users", userRoutes);
-app.use("/api/users/sprint",sprintRoutes);
-app.use("/api/users/task",taskRouter);
+app.use("/api/users/sprint", sprintRoutes);
+app.use("/api/users/task", taskRouter);
 app.use(errorHandler);
 
 
 
 
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+
+    await connectDB();
     console.log(`Server is running on port ${PORT}`);
 });
 
