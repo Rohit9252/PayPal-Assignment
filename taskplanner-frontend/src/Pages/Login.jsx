@@ -17,6 +17,9 @@ import Cookies from 'js-cookie';
 import 'react-toastify/dist/ReactToastify.css';
 import { errorMsg, successMsg } from "../alert";
 import { fetchApi } from "../helper";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 
@@ -40,13 +43,14 @@ const Login = () => {
       const data = await response.json();
       Cookies.set("token", data.accessToken);
 
-      successMsg();
+      successMsg("Login Suucessfully");
 
-      navigate("/dashboard");
+
+      navigate("/dash");
 
     }else{
 
-      errorMsg();
+      errorMsg("Invalid Credentials");
 
     }
 

@@ -2,41 +2,72 @@ import "./sprint.css";
 import React, { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import { fetchApiGetWithToken } from "../helper";
-import { Box } from "@chakra-ui/react";
+import { Box, Button, Flex, FormControl, FormLabel, Image, Input, Modal, Select, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { fetchApiWithToken } from "../helper";
+import InitialFocus from "./modalTask";
+import { errorMsg, successMsg } from "../alert";
+import Backdrop from "./Backdrop";
+import Cookies from "js-cookie";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import MainData from "./MainData";
 
 
 const SprintDetails = () => {
 
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const initialRef = React.useRef(null)
     const [task, setTask] = useState([]);
-
     const parm = useParams();
 
- 
 
+    const [status, setStatus] = useState({
+        taskid: "",
+        status: ""
+    });
+
+
+
+    const handleSubmite = async (e) => {
+
+        console.log(status);
+
+        const token = Cookies.get('token');
+
+        const response = await fetch("http://localhost:5000/api/users/task/status", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify(status),
+        });
+
+      if(response.status === 200){
+        
+          successMsg("Status Updated");
+
+      }else{
+            errorMsg("Something went wrong");
+      }
+    }
     const getSprint = async () => {
         try {
-          const response = await fetchApiGetWithToken("/users/sprint/"+parm.id);
-          const data = await response.json();
-          setTask(data);
+            const response = await fetchApiGetWithToken("/users/sprint/" + parm.id);
+            const data = await response.json();
+            setTask(data);
         } catch (error) {
-          console.log(error.message);
+            console.log(error.message);
         }
-      };
-      console.log(task);
-      useEffect(() => {
+    };
+    // console.log(task);
+    useEffect(() => {
         getSprint();
-      }, []);
-
-
-
-
+    }, []);
 
     return (
-
         <Box m={10}>
-
-            <h1><span className="blue"  m={10}>&lt;</span>Table<span className="blue">&gt;</span> <span className="yellow">Responsive</span></h1>
-            <h2>Created with love by <a href="https://github.com/pablorgarcia" target="_blank">Pablo García</a></h2>
+            <InitialFocus sprintid={parm.id} />
 
             <table className="container">
                 <thead>
@@ -44,6 +75,7 @@ const SprintDetails = () => {
                         <th><h1>Task Name</h1></th>
                         <th><h1>Type</h1></th>
                         <th><h1>Status</h1></th>
+                        <th><h1>Add Status</h1></th>
                         <th><h1>Assigne</h1></th>
                     </tr>
                 </thead>
@@ -55,70 +87,101 @@ const SprintDetails = () => {
                                 <tr key={i} >
                                     <td>{el.name}</td>
                                     <td>{el.type}</td>
-                                    <td>
-                                        <select 
-                                        onChange={(e) => {
-                                            console.log(e.target.value)
-                                            console.log(el._id);
-                                        }}
-                                        id={i}>
-                                            <option value={"todo"}>To do</option>
-                                            <option value={"in progress"}>In Progress</option>
-                                            <option value={"done"}>Done</option>
-                                        </select>
+                                    <td>{el.status == "done" ? (
+                                        <Button 
+                                            alignSelf={"center"}
+                                        colorScheme="green" size="lg">Completed</Button>
+                                    ): el.status == "in Progress" ?  (
+
+
+                                        <Button colorScheme="red" size="lg">In Progress</Button>
+                                    ):(
+                                        <Button colorScheme="yellow" size="lg">To Do</Button>
+                                    )}
+                                    
+                                    
                                     </td>
-                                    <td>{el?.assignee?.name}</td>
+                                    <td>
+
+                                        {
+                                            el.status == "done" ? (
+                                                <Button colorScheme="green" size="lg">Completed</Button>
+                                            ) :(
+                                                <>
+                                                
+                                                <Button colorScheme="blue" size="lg" onClick={() => {
+                                                    setStatus({
+                                                        taskid: el._id,
+                                                        status: ""
+                                                    })
+                                                    onOpen()
+        
+                                                }}
+        
+                                                >
+                                                    Add Status
+                                                </Button>
+                                                <Modal
+                                                    initialFocusRef={initialRef}
+                                                    isOpen={isOpen}
+                                                    onClose={onClose}
+                                                >
+                                                    <ModalOverlay />
+                                                    <ModalContent border="1px solid blue" h={"40vh"}>
+                                                        <ModalHeader>Add Status to Task</ModalHeader>
+                                                        <ModalCloseButton />
+                                                        <ModalBody pb={6} mt={"5%"}>
+                                                            <FormControl>
+                                                                <FormLabel>Status Detail</FormLabel>
+                                                                <Select placeholder='Select option'
+                                                                    value={status.status}
+                                                                    onChange={(e) => {
+                                                                        setStatus({ ...status, status: e.target.value });
+                                                                    }}
+                                                                >
+                                                                    <option value='todo'>To Do</option>
+                                                                    <option value='in progress'>In progress</option>
+                                                                    <option value='done'>Done</option>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </ModalBody>
+        
+                                                        <ModalFooter>
+                                                            <Button colorScheme='blue' mr={3}
+                                                                onClick={handleSubmite}
+                                                            >
+                                                                Add It
+                                                            </Button>
+                                                            <Button onClick={onClose}>Cancel</Button>
+                                                        </ModalFooter>
+                                                    </ModalContent>
+                                                </Modal>
+                                                </>
+                                             
+
+                                            )
+                                        }
+
+                                        
+                                    </td>
+                                    {
+
+                                        el?.assignee?.name ? (
+                                            <td>{el?.assignee?.name}</td>
+                                        ) : (
+                                            <td>
+                                                <Backdrop taskid={el._id} />
+
+                                            </td>
+                                        )
+
+
+                                    }
                                 </tr>
                             )
                         })
                     }
 
-                    {/* <tr>
-                        <td>
-                            <select>
-                                <option value="volvo">Volvo</option>
-                                <option value="volvo">Volvo</option>
-                                <option value="volvo">Volvo</option>
-                                <option value="volvo">Volvo</option>
-                                <option value="volvo">Volvo</option>
-                            </select>
-
-                        </td>
-                        <td>9518</td>
-                        <td>6369</td>
-                        <td>01:32:50</td>
-                    </tr>
-                    <tr>
-                        <td>Twitter</td>
-                        <td>7326</td>
-                        <td>10437</td>
-                        <td>00:51:22</td>
-                    </tr>
-                    <tr>
-                        <td>Amazon</td>
-                        <td>4162</td>
-                        <td>5327</td>
-                        <td>00:24:34</td>
-                    </tr>
-                    <tr>
-                        <td>LinkedIn</td>
-                        <td>3654</td>
-                        <td>2961</td>
-                        <td>00:12:10</td>
-                    </tr>
-                    <tr>
-                        <td>CodePen</td>
-                        <td>2002</td>
-                        <td>4135</td>
-                        <td>00:46:19</td>
-                    </tr>
-                    <tr>
-                        <td>GitHub</td>
-                        <td>4623</td>
-                        <td>3486</td>
-                        <td>00:31:52</td>
-
-                    </tr> */}
                 </tbody>
             </table>
 

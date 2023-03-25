@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
-export const successMsg = () => {
-    toast.success("user Created Suucessfully", {
+export const successMsg = (msg) => {
+    toast.success(msg, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -12,8 +12,8 @@ export const successMsg = () => {
   
   }
   
- export  const errorMsg = () => {
-    toast.error("Please Enter Correct Details", {
+ export  const errorMsg = (msg) => {
+    toast.error(msg, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,

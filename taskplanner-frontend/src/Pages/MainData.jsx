@@ -22,13 +22,12 @@ const MainData = () => {
       const response = await fetchApiWithToken("/users/sprint/create", sprint);
 
      if(response.status === 201){
-        successMsg();
+        successMsg("Sprint Created");
         onClose();
      }else{
-        errorMsg();
+        errorMsg("Internal Server Error");
      }
-     
-
+    
     }
 
     // task

@@ -52,11 +52,10 @@ const Signup = () => {
     console.log(response);
 
     if (response.status === 201) {
-      // const data = await response.json();
-      successMsg();
+      successMsg("User Created Successfully");
       navigate("/login");
     } else {
-      errorMsg();
+      errorMsg("User Already Exists");
     }
   }
 

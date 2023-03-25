@@ -77,7 +77,7 @@ const loginUser = asyncHandler(async (req, res) => {
                 email: user.email,
                 id: user._id
             },
-        }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' }   )
+        }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '24h' }   )
         res.status(200).json({
             accessToken
         });
@@ -91,8 +91,27 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 
+// @desc Get all users
+// @route GET /api/users
+// @access Private\
+const getAllUser = asyncHandler(async (req, res) => {
+
+    const user = await User.find();
+
+
+    if (user) {
+        res.status(200).json(user);
+    }else{
+        res.status(400);
+        throw new Error('Invalid user data');
+    }
+
+});
+
+
 
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    getAllUser
 }

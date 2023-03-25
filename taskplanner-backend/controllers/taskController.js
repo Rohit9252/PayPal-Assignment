@@ -85,34 +85,26 @@ const assignTaskToUser = asyncHandler(async (req, res) => {
 // @route POST /api/users/task/status
 // @access Private
 const updateTaskStatus = asyncHandler(async (req, res) => {
+
     const { taskid, status } = req.body;
-
-
-
     if (!taskid || !status) {
         res.status(400)
         throw new Error("All fields are required");
     }
-
     const task = await Task.findById(taskid);
-
     if (!task) {
         res.status(400)
         throw new Error("Invalid task");
     }
 
-
-    if(task.assignee.toString() == req.user._id.toString()){
+    const result =  task.assignee.toString() === req.user.id.toString();
+    console.log(result);
+    if(result){
         task.status = status;
         const updatedTask = await task.save();
     
-    
-        if(updatedTask){
-            res.status(200).json(updatedTask);
-        }else{
-            res.status(400)
-            throw new Error("Invalid task data");
-        }    
+        res.status(200).json(updatedTask);
+
     
     }else{
         res.status(400)

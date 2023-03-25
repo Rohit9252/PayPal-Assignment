@@ -21,7 +21,9 @@ import {
     ChevronDownIcon,
     ChevronRightIcon,
   } from '@chakra-ui/icons';
+  import LogoutIcon from "@mui/icons-material/Logout";
   import { BsFillStarFill } from "react-icons/bs";
+import Cookies from 'js-cookie';
   export default function WithSubnavigation() {
     const { isOpen, onToggle } = useDisclosure();
   
@@ -68,6 +70,22 @@ import {
             justify={'flex-end'}
             direction={'row'}
             spacing={6}>
+
+              
+
+
+             <Button 
+              as={'a'}
+              fontSize={'sm'}
+              fontWeight={400}
+              variant={'link'}
+                onClick={() => {
+                  Cookies.remove("token");
+                }}
+             >
+             <LogoutIcon /> Logout 
+              </Button> 
+
             <Button
               as={'a'}
               fontSize={'sm'}
@@ -252,5 +270,9 @@ import {
     {
       label: 'Admin Panel',
       href: '/dash',
+    },
+    {
+      label: 'View Sprint',
+      href: '/sprint',
     },
   ];

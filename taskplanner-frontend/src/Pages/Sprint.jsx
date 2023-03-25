@@ -6,6 +6,7 @@ import { fetchApiGetWithToken } from "../helper";
 import Card from "../Components/Card";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import MainData from './MainData'
 
 
 const Sprint = () => {
@@ -27,18 +28,13 @@ const Sprint = () => {
 
   return (
     <Box w={"100%"} py={"1%"} pl="1%" pr="1%" bg={"white"}>
+
+        
+       
+
       <Flex gap={"1%"}>
         <Box
-          w={"20%"}
-          h="90vh"
-          border={"2px solid black"}
-          bg={"black"}
-          borderRadius={10}
-        >
-          <Sidebar />
-        </Box>
-        <Box
-          w={"80%"}
+          w={"100%"}
           h="90vh"
           borderRadius={10}
           bg="#edf3f8"
@@ -46,111 +42,122 @@ const Sprint = () => {
         >
           <Text textAlign={"center"} fontWeight="bold" fontSize={22} color="teal" textDecoration="underline">Welcome to Sprint plan</Text>
           <Box className={styles.main_box}>
-            {sprint.map((el, i) => {
-              return (
-                <Link to={`/sprint/${el._id}`}>
-                  <Flex
-                    key={i}
-                    className={styles.main_box2}
-                    bg="#edf3f8"
-                    _dark={{
-                      bg: "#3e3e3e",
-                    }}
-                    p={50}
-                    w="100%"
-                  >
-                    <Flex
-                      direction="column"
-                      justifyContent="center"
-                      alignItems="center"
-                      w="sm"
-                      mx="auto"
-                    >
-                      <Box
-                        bg="gray.300"
-                        h={32}
-                        w="200px"
-                        rounded="lg"
-                        shadow="md"
-                        bgSize="cover"
-                        bgPos="center"
-                        style={{
-                          backgroundImage:
-                            "url(https://www.uid.com/assets/uploads/inContent/News_Design-Sprint_2_780_eng.jpg)",
-                        }}
-                      ></Box>
+            {
 
-                      <Box
-                        w={{
-                          base: "150px",
-                          md: "150px",
-                        }}
-                        bg="white"
+
+              sprint.length > 0 ? (
+                sprint.map((el, i) => {
+                  return (
+                    <Link to={`/sprint/${el._id}`}>
+                      <Flex
+                        key={i}
+                        className={styles.main_box2}
+                        bg="#edf3f8"
                         _dark={{
-                          bg: "gray.800",
+                          bg: "#3e3e3e",
                         }}
-                        mt={-10}
-                        shadow="lg"
-                        rounded="lg"
-                        overflow="hidden"
+                        p={50}
+                        w="100%"
                       >
-                        <chakra.h3
-                          py={2}
-                          textAlign="center"
-                          fontWeight="bold"
-                          textTransform="uppercase"
-                          color="gray.800"
-                          _dark={{
-                            color: "white",
-                          }}
-                          letterSpacing={1}
-                        >
-                          {el.name}
-                        </chakra.h3>
-
                         <Flex
-                          alignItems="center"
+                          direction="column"
                           justifyContent="center"
-                          py={2}
-                          px={3}
-                          bg="gray.200"
-                          _dark={{
-                            bg: "gray.700",
-                          }}
+                          alignItems="center"
+                          w="sm"
+                          mx="auto"
                         >
-                          <chakra.button
-                            bg="gray.800"
-                            fontSize="xs"
-                            fontWeight="bold"
-                            color="white"
-                            px={2}
-                            py={1}
+                          <Box
+                            bg="gray.300"
+                            h={32}
+                            w="200px"
                             rounded="lg"
-                            textTransform="uppercase"
-                            _hover={{
-                              bg: "gray.700",
-                              _dark: {
-                                bg: "gray.600",
-                              },
+                            shadow="md"
+                            bgSize="cover"
+                            bgPos="center"
+                            style={{
+                              backgroundImage:
+                                "url(https://www.uid.com/assets/uploads/inContent/News_Design-Sprint_2_780_eng.jpg)",
                             }}
-                            _focus={{
-                              bg: "gray.700",
-                              _dark: {
-                                bg: "gray.600",
-                              },
-                              outline: "none",
-                            }}
-                          >
-                            View Detail's
-                          </chakra.button>
-                        </Flex>
-                      </Box>
-                    </Flex>
-                  </Flex>
-                </Link>
+                          ></Box>
 
-              );
-            })}
+                          <Box
+                            w={{
+                              base: "150px",
+                              md: "150px",
+                            }}
+                            bg="white"
+                            _dark={{
+                              bg: "gray.800",
+                            }}
+                            mt={-10}
+                            shadow="lg"
+                            rounded="lg"
+                            overflow="hidden"
+                          >
+                            <chakra.h3
+                              py={2}
+                              textAlign="center"
+                              fontWeight="bold"
+                              textTransform="uppercase"
+                              color="gray.800"
+                              _dark={{
+                                color: "white",
+                              }}
+                              letterSpacing={1}
+                            >
+                              {el.name}
+                            </chakra.h3>
+
+                            <Flex
+                              alignItems="center"
+                              justifyContent="center"
+                              py={2}
+                              px={3}
+                              bg="gray.200"
+                              _dark={{
+                                bg: "gray.700",
+                              }}
+                            >
+                              <chakra.button
+                                bg="gray.800"
+                                fontSize="xs"
+                                fontWeight="bold"
+                                color="white"
+                                px={2}
+                                py={1}
+                                rounded="lg"
+                                textTransform="uppercase"
+                                _hover={{
+                                  bg: "gray.700",
+                                  _dark: {
+                                    bg: "gray.600",
+                                  },
+                                }}
+                                _focus={{
+                                  bg: "gray.700",
+                                  _dark: {
+                                    bg: "gray.600",
+                                  },
+                                  outline: "none",
+                                }}
+                              >
+                                View Detail's
+                              </chakra.button>
+                            </Flex>
+                          </Box>
+                        </Flex>
+                      </Flex>
+                    </Link>
+
+                  );
+                })
+              ) : (
+                <div
+                 style={{textAlign:"center",fontSize:"20px",fontWeight:"bold",color:"red", margin:"auto"}} 
+                >Please Login First To see All the Sprint Plan</div>
+              )
+
+            }
           </Box>
         </Box>
       </Flex>
