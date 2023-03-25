@@ -11,7 +11,7 @@ import {
   useDisclosure,
   Select
 } from '@chakra-ui/react'
-import { fetchApiGetWithToken } from '../helper';
+import { fetchApiGetWithToken, fetchApiWithToken } from '../helper';
 import Cookies from 'js-cookie';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
@@ -57,15 +57,7 @@ const Backdrop = ({ taskid }) => {
     const token = Cookies.get('token');
 
 
-    const response = await fetch("http://localhost:5000/api/users/task/assignee", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
-
-      },
-      body: JSON.stringify(assignedata)
-    })
+    const response = await fetchApiWithToken("/users/task/assignee", assignedata);
 
 
     if (response.status === 200) {

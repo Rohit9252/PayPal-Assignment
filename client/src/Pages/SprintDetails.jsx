@@ -34,7 +34,7 @@ const SprintDetails = () => {
 
         const token = Cookies.get('token');
 
-        const response = await fetch("http://localhost:5000/api/users/task/status", {
+        const response = await fetch("https://task-planner-txcg.onrender.com/api/users/task/status", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

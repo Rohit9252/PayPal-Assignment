@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 export async function fetchApi(endpoint, model) {
 
-    const response = await fetch("http://localhost:5000/api" + endpoint, {
+    const response = await fetch("https://task-planner-txcg.onrender.com/api" + endpoint, {
 
         method: "POST",
         headers: {
@@ -18,7 +18,7 @@ export async function fetchApiWithToken(endpoint, model) {
 
     const token = Cookies.get("token");
 
-    const response = await fetch("http://localhost:5000/api" + endpoint, {
+    const response = await fetch("https://task-planner-txcg.onrender.com/api" + endpoint, {
 
         method: "POST",
         headers: {
@@ -36,7 +36,7 @@ export async function fetchApiGetWithToken(endpoint) {
 
     const token = Cookies.get("token");
 
-    const response = await fetch("http://localhost:5000/api" + endpoint, {
+    const response = await fetch("https://task-planner-txcg.onrender.com/api" + endpoint, {
 
         method: "GET",
         headers: {
@@ -46,3 +46,6 @@ export async function fetchApiGetWithToken(endpoint) {
 
     return  response;
 }
+
+
+

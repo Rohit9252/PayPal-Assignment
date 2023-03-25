@@ -36,7 +36,7 @@ export default function InitialFocus({ sprintid }) {
 
     const token = Cookies.get("token");
 
-    const response = await fetch("http://localhost:5000/api/users/task/create", {
+    const response = await fetch("https://task-planner-txcg.onrender.com/api/users/task/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -154,7 +154,9 @@ const Sprint = () => {
               ) : (
                 <div
                  style={{textAlign:"center",fontSize:"20px",fontWeight:"bold",color:"red", margin:"auto"}} 
-                >Please Login First To see All the Sprint Plan</div>
+                >No Sprint Plan Availble 
+                  
+                </div>
               )
 
             }
